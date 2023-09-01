@@ -53,22 +53,22 @@ tasks:
             title = "Single shell command",
             code = {
                 "commands:",
-                "- 'echo \"The current execution is : {{ execution.id }}\"'"
+                " - 'echo \"The current execution is : {{ execution.id }}\"'"
             }
         ),
         @Example(
             title = "Shell command that generate file in storage accessible through outputs",
             code = {
                 "commands:",
-                "- echo \"1\" >> {{ outputDir }}/first.txt",
-                "- echo \"2\" >> {{ outputDir }}/second.txt"
+                " - echo '1' >> '{{ outputDir }}/first.txt'",
+                " - echo '2' >> '{{ outputDir }}/second.txt'"
             }
         ),
         @Example(
             title = "Shell with an input file from Kestra's local storage created by a previous task.",
             code = {
                 "commands:",
-                "  - cat {{ outputs.previousTaskId.uri }}"
+                " - cat '{{ outputs.previousTaskId.uri }}'"
             }
         ),
         @Example(
@@ -78,7 +78,7 @@ tasks:
                 "docker:",
                 "  image: php",
                 "commands:",
-                "- 'php -r 'print(phpversion() . \"\\n\");'",
+                " - 'php -r 'print(phpversion() . \"\\n\");'",
             }
         ),
         @Example(
