@@ -12,6 +12,8 @@ import io.kestra.plugin.scripts.exec.scripts.models.ScriptOutput;
 import io.kestra.plugin.scripts.exec.scripts.runners.CommandsWrapper;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -78,9 +80,16 @@ public abstract class AbstractExecScript extends Task implements RunnableTask<Sc
         title = "Which interpreter to use."
     )
     @PluginProperty
-    @NotNull
     @NotEmpty
     protected List<String> interpreter = List.of("/bin/sh", "-c");
+
+    @Builder.Default
+    @Schema(
+        title = "List of process exit codes considered successful"
+    )
+    @PluginProperty
+    @NotEmpty
+    protected List<Integer> successExitCodes = List.of(0);
 
     private NamespaceFiles namespaceFiles;
 
@@ -116,6 +125,7 @@ public abstract class AbstractExecScript extends Task implements RunnableTask<Sc
             .withContainerImage(this.containerImage)
             .withTaskRunner(this.taskRunner)
             .withDockerOptions(this.injectDefaults(getDocker()))
+            .withSuccessExitCodes(this.successExitCodes)
             .withNamespaceFiles(this.namespaceFiles)
             .withInputFiles(this.inputFiles)
             .withOutputFiles(this.outputFiles);

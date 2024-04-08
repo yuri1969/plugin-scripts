@@ -50,11 +50,11 @@ import static io.kestra.core.utils.Rethrow.throwFunction;
     title = "Task runner that executes a task inside a container in a Docker compatible engine.",
     description = """
         This task runner is container-based so the `containerImage` property must be set.
-        
+
         To access the task's working directory, use the `{{workingDir}}` Pebble expression or the `WORKING_DIR` environment variable. Input files and namespace files will be available in this directory.
 
         To generate output files you can either use the `outputFiles` task's property and create a file with the same name in the task's working directory, or create any file in the output directory which can be accessed by the `{{outputDir}}` Pebble expression or the `OUTPUT_DIR` environment variables.
-         
+
         Note that when the Kestra Worker running this task is terminated, the container will still run until completion, except if Kestra itself is run inside a container and Docker-In-Docker (dind) is used as the dind engine will also be terminated."""
 )
 @Plugin(
@@ -64,7 +64,7 @@ import static io.kestra.core.utils.Rethrow.throwFunction;
             code = """
                 id: new-shell
                 namespace: myteam
-                                
+
                 tasks:
                   - id: shell
                     type: io.kestra.plugin.scripts.shell.Commands
@@ -80,11 +80,11 @@ import static io.kestra.core.utils.Rethrow.throwFunction;
             code = """
                 id: new-shell-with-file
                 namespace: myteam
-                                
+
                 inputs:
                   - id: file
                     type: FILE
-                                
+
                 tasks:
                   - id: shell
                     type: io.kestra.plugin.scripts.shell.Commands
@@ -324,7 +324,8 @@ public class DockerTaskRunner extends TaskRunner {
                 Integer exitCode = result.awaitStatusCode();
                 Await.until(ended::get);
 
-                if (exitCode != 0) {
+                // TODO: need to change the kestra core...
+                if (exitCode != taskCommands.get) {
                     throw new TaskException(exitCode, defaultLogConsumer.getStdOutCount(), defaultLogConsumer.getStdErrCount());
                 } else {
                     logger.debug("Command succeed with code " + exitCode);

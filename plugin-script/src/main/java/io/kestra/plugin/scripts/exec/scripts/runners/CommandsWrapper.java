@@ -57,6 +57,9 @@ public class CommandsWrapper implements TaskCommands {
     private DockerOptions dockerOptions;
 
     @With
+    private List<Integer> successExitCodes;
+
+    @With
     private Boolean warningOnStdErr;
 
     @With
@@ -94,6 +97,7 @@ public class CommandsWrapper implements TaskCommands {
             containerImage,
             taskRunner,
             dockerOptions,
+            successExitCodes,
             warningOnStdErr,
             namespaceFiles,
             inputFiles,
